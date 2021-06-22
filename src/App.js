@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './Navbar';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Board from './Board';
+import Modal from './Modal';
+import { useContext, useEffect, useState, useRef } from 'react';
+import uuid from "uuid/v4";
 
 function App() {
+  const [openModal, setOpenModal] = useState(false);
+  const [modalData, setModalData] = useState({id: 0});
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar/>
+        <div className="content">
+          <button id="addTask" onClick={() => setOpenModal(true)}>Open Modal</button>
+          <Modal open={ openModal } onClose={() => setOpenModal(false) } onSubmit={(data) => {
+            console.log(modalData);
+            console.log(openModal);
+            console.log(data);
+            if (data.submit === 1) {
+              setModalData(data);
+            }
+            setOpenModal(false);
+          }}/>
+          <Board newTask={modalData}/>
+        </div>
+      </Router>
     </div>
   );
 }
