@@ -1,8 +1,14 @@
 *{
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 .board{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    min-width: 100%;
+    overflow-x: scroll;
+    height: 40.5em;
+}
+
+.board::-webkit-scrollbar {
+    display: none;
 }

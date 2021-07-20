@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Board.css';
 import TaskList from './TaskList';
 import uuid from "uuid/v4";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const itemsFromBackend = [
   { id: uuid(), title: "First task", description: "First Desc" },
@@ -20,6 +20,30 @@ const columnsFromBackend = {
   },
   [uuid()]: {
     name: "To do",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
+    items: []
+  },
+  [uuid()]: {
+    name: "In Progress",
     items: []
   },
   [uuid()]: {
@@ -68,9 +92,8 @@ const onDragEnd = (result, columns, setColumns) => {
 const Board = ({ newTask }) => {
     const [columns, setColumns] = useState(columnsFromBackend);
     console.log(newTask)
-    let hasMagenicVendor = itemsFromBackend.some( item => item['id'] === newTask.id)
-    console.log(hasMagenicVendor)
-    if (!hasMagenicVendor && newTask.id !== 0){
+    let previousTask = itemsFromBackend.some( item => item['id'] === newTask.id)
+    if (!previousTask && newTask.id !== 0){
       itemsFromBackend.push(newTask)
     }
 

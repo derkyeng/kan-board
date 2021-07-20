@@ -36,4 +36,5 @@ li {
     background-color: #ebecf0;
     padding: 10px;
     border-radius: 5px;
+    min-width: 20em;
 }

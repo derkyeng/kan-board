@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 import './Task.css';
 
 const Task = ({item, index}) => {

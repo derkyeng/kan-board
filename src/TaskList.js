@@ -1,11 +1,8 @@
 import Task from "./Task";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import './TaskList.css';
-import { useState, useEffect } from "react";
 
 const TaskList = ({ data, id }) => {
-    const [tasks, setTasks] = useState(data);
-    
     return (
         <div key={ id } className="task-list">
             <h2 id="title">{ data.name }</h2>
