@@ -15,6 +15,7 @@ const TaskList = ({ data, id }) => {
                             ? "lightblue"
                             : "#ebecf0",
                             }}>
+                            {/* {console.log(data.items)} */}
                             {data.items.map((item, index) => {
                                 return (
                                     <div key={ item.id }>

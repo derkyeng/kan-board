@@ -1,56 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Board.css';
 import TaskList from './TaskList';
 import uuid from "uuid/v4";
 import { DragDropContext } from "react-beautiful-dnd";
-
-const itemsFromBackend = [
-  { id: uuid(), title: "First task", description: "First Desc" },
-  { id: uuid(), title: "Second task", description: "Second Desc"  },
-  { id: uuid(), title: "Third task", description: "Third Desc"  },
-  { id: uuid(), title: "Fourth task", description: "Fourth Desc"  },
-  { id: uuid(), title: "Fifth task", description: "Fifth Desc"  }
-];
-
-
-const columnsFromBackend = {
-  [uuid()]: {
-    name: "Requested",
-    items: itemsFromBackend
-  },
-  [uuid()]: {
-    name: "To do",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-};
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -87,15 +39,44 @@ const onDragEnd = (result, columns, setColumns) => {
       }
     });
   }
+  console.log(columns)
 };
 
-const Board = ({ newTask }) => {
-    const [columns, setColumns] = useState(columnsFromBackend);
-    console.log(newTask)
-    let previousTask = itemsFromBackend.some( item => item['id'] === newTask.id)
-    if (!previousTask && newTask.id !== 0){
-      itemsFromBackend.push(newTask)
+const Board = ({ newTask, lists }) => {
+    const [columns, setColumns] = useState(lists);
+    const [visual, setVisual] = useState(columns);
+    const [task, setTask] = useState({id: 0});
+
+    if (newTask.id !== task.id){
+      console.log("NEW TASK")
+      setTask(newTask);
     }
+
+    useEffect(() => {
+      console.log("Added Task")
+      fetch("/add", {
+        method: "POST",
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(task)
+      })
+      fetch("/api")
+      .then((res) => res.json())
+      .then((data) => {
+        setColumns(data)
+    });
+    }, [task]);
+
+    useEffect(() => {
+      fetch("/update", {
+        method: "POST",
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(columns)
+      })
+    }, [columns])
 
     return (
         <div className="board">
