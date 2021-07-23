@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8001;
 const app = express();
 
 app.use(cors);
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 const dataItems = [
     { id: "1", title: "First task", description: "First Desc" },
