@@ -1,10 +1,12 @@
 const express = require("express");
 const jsonParser = require("body-parser").json();
+const path = require('path');
 
 const PORT = process.env.PORT || 8001;
 
 const app = express();
-let counter = 0;
+
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 const dataItems = [
     { id: "1", title: "First task", description: "First Desc" },
@@ -16,11 +18,15 @@ const dataItems = [
 
 let dataList = {
     ["1"]: {
-        name: "Requested",
+        name: "To Do",
         items: dataItems
     },
-    ["2"]:{
-        name: "Second",
+    ["2"]: {
+        name: "In Progress",
+        items: []
+    },
+    ["3"]: {
+        name: "Completed",
         items: []
     }
 }
