@@ -7,13 +7,7 @@ const PORT = process.env.PORT || 8001;
 
 const app = express();
 
-app.use(cors);
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 const dataItems = [
     { id: "1", title: "First task", description: "First Desc" },
@@ -57,6 +51,10 @@ app.post("/update", jsonParser, (req, res) => {
     dataList = req.body;
     res.json(dataList);
 })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  });
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
