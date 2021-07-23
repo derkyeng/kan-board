@@ -7,8 +7,6 @@ const PORT = process.env.PORT || 8001;
 
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, '../client/build')));
-
 const dataItems = [
     { id: "1", title: "First task", description: "First Desc" },
     { id: "2", title: "Second task", description: "Second Desc"  },
@@ -51,6 +49,8 @@ app.post("/update", jsonParser, (req, res) => {
     dataList = req.body;
     res.json(dataList);
 })
+
+app.use('/static', express.static(path.join(__dirname, 'client/build')));
 
 app.get('*', function(_, res) {
     res.sendFile(path.join(__dirname, './client/build/index.html'), function(err) {
