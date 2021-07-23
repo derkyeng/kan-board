@@ -10,6 +10,11 @@ const app = express();
 app.use(cors);
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
 const dataItems = [
     { id: "1", title: "First task", description: "First Desc" },
     { id: "2", title: "Second task", description: "Second Desc"  },
