@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Board.css';
 import TaskList from './TaskList';
-import uuid from "uuid/v4";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const onDragEnd = (result, columns, setColumns) => {
@@ -44,16 +43,16 @@ const onDragEnd = (result, columns, setColumns) => {
 
 const Board = ({ newTask, lists }) => {
     const [columns, setColumns] = useState(lists);
-    const [visual, setVisual] = useState(columns);
     const [task, setTask] = useState({id: 0});
 
     if (newTask.id !== task.id){
-      console.log("NEW TASK")
       setTask(newTask);
+      console.log("NEW TASK", newTask)
     }
 
     useEffect(() => {
       console.log("Added Task")
+      console.log(task)
       fetch("/add", {
         method: "POST",
         headers: {
@@ -61,11 +60,14 @@ const Board = ({ newTask, lists }) => {
         },
         body: JSON.stringify(task)
       })
-      fetch("/api")
-      .then((res) => res.json())
-      .then((data) => {
-        setColumns(data)
-    });
+      .then(res => res.json())
+      .then(data => {
+        console.log('Success:', data);
+        setColumns(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }, [task]);
 
     useEffect(() => {
@@ -76,7 +78,14 @@ const Board = ({ newTask, lists }) => {
         },
         body: JSON.stringify(columns)
       })
-    }, [columns])
+      .then(res => res.json())
+      .then(data => {
+        console.log('Updated:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }, [columns]);
 
     return (
         <div className="board">

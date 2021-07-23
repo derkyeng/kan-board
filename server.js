@@ -27,19 +27,22 @@ let dataList = {
 
 
 app.get("/api", (req, res) => {
+    console.log("Getting");
     res.json(dataList);
 });
   
 app.post("/add", jsonParser, (req,res) => {
+    // console.log(req.body);
     if (req.body.id !== 0){
         dataList[1].items.push(req.body);     
     }
+    res.json(dataList);
 })
 
 app.post("/update", jsonParser, (req, res) => {
+    console.log("Updating")
     dataList = req.body;
-    console.log(dataList)
-    console.log("\n")
+    res.json(dataList);
 })
 
 app.listen(PORT, () => {
