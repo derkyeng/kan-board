@@ -50,15 +50,16 @@ app.post("/update", jsonParser, (req, res) => {
     res.json(dataList);
 })
 
-app.use('/static', express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '/client/build')));
 
-app.get('*', function(_, res) {
-    res.sendFile(path.join(__dirname, './client/build/index.html'), function(err) {
-      if (err) {
-        res.status(500).send(err)
-      }
-    })
-  })
+app.get('*', function(req, res) {
+  res.sendFile('index.html', { root: __dirname }, function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
